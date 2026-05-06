@@ -11,6 +11,17 @@ node_modules
 dist
 dist-ssr
 *.local
+.env
+.AIAGENTS
+
+# Dependency folders
+node_modules/
+dist/
+.env.local
+
+# Sanity specific
+portal-rengas/node_modules/
+portal-rengas/dist/
 
 # Editor directories and files
 .vscode/*
