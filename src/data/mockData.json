@@ -1,0 +1,123 @@
+{
+  "teachers": [
+    {
+      "id": 1,
+      "name": "Drs. H. Mulyadi",
+      "subject": "Kepala Sekolah",
+      "image": "https://i.pravatar.cc/150?u=mulyadi"
+    },
+    {
+      "id": 2,
+      "name": "Siti Aminah, S.Pd.",
+      "subject": "Guru Kelas 1",
+      "image": "https://i.pravatar.cc/150?u=siti"
+    },
+    {
+      "id": 3,
+      "name": "Bambang Wijaya, S.Pd.",
+      "subject": "Guru Olahraga",
+      "image": "https://i.pravatar.cc/150?u=bambang"
+    },
+    {
+      "id": 4,
+      "name": "Lusi Widia, S.Pd.",
+      "subject": "Guru Kesenian",
+      "image": "https://i.pravatar.cc/150?u=lusi"
+    }
+  ],
+  "news": [
+    {
+      "id": 1,
+      "title": "Juara 1 Lomba Cerdas Cermat Tingkat Kota",
+      "date": "2024-03-15",
+      "thumbnail": "https://images.unsplash.com/photo-1546410531-bb4caa6b424d?q=80&w=400",
+      "excerpt": "SD Negeri Rengas meraih prestasi membanggakan dalam ajang LCC..."
+    },
+    {
+      "id": 2,
+      "title": "Kegiatan Kerja Bakti Rutin Sekolah",
+      "date": "2024-03-10",
+      "thumbnail": "https://images.unsplash.com/photo-1532094349884-543bc11b234d?q=80&w=400",
+      "excerpt": "Seluruh warga sekolah berpartisipasi aktif dalam menjaga kebersihan lingkungan..."
+    }
+  ],
+  "extracurriculars": [
+  {
+    "id": 1,
+    "name": "Pramuka",
+    "category": "Wajib",
+    "icon": "🏕️",
+    "description": "Membentuk karakter disiplin, mandiri, dan jiwa kepemimpinan siswa."
+  },
+  {
+    "id": 2,
+    "name": "Drumband",
+    "category": "Seni",
+    "icon": "🥁",
+    "description": "Melatih koordinasi, ritme, dan kekompakan dalam seni musik perkusi."
+  },
+  {
+    "id": 3,
+    "name": "Taekwondo",
+    "category": "Olahraga",
+    "icon": "🥋",
+    "description": "Mengembangkan fisik, mental, dan kedisiplinan melalui seni bela diri Korea."
+  },
+  {
+    "id": 4,
+    "name": "Pencak Silat",
+    "category": "Olahraga",
+    "icon": "🤺",
+    "description": "Melestarikan seni bela diri tradisional Nusantara sekaligus melatih ketangkasan."
+  },
+  {
+    "id": 5,
+    "name": "Seni Tari",
+    "category": "Seni",
+    "icon": "💃",
+    "description": "Melestarikan dan mengekspresikan budaya tradisional Indonesia melalui gerak tari."
+  },
+  {
+    "id": 6,
+    "name": "Futsal",
+    "category": "Olahraga",
+    "icon": "⚽",
+    "description": "Melatih kerjasama tim, kelincahan, dan sportivitas melalui olahraga futsal."
+  },
+  {
+    "id": 7,
+    "name": "Cerita Bergambar",
+    "category": "Seni",
+    "icon": "🎨",
+    "description": "Mengasah kreativitas dan kemampuan bercerita melalui media gambar dan ilustrasi."
+  },
+  {
+    "id": 8,
+    "name": "Vokal / Seni Bernyanyi",
+    "category": "Seni",
+    "icon": "🎤",
+    "description": "Mengembangkan bakat vokal, teknik bernyanyi, dan kepercayaan diri di atas panggung."
+  },
+  {
+    "id": 9,
+    "name": "Kriya Anyam",
+    "category": "Keterampilan",
+    "icon": "🧺",
+    "description": "Melestarikan kerajinan tangan tradisional anyaman sebagai warisan budaya lokal."
+  }
+],
+  "faq": [
+    {
+      "question": "Kapan pendaftaran siswa baru dibuka?",
+      "answer": "Pendaftaran PPDB biasanya dibuka mulai bulan Mei hingga Juni setiap tahunnya."
+    },
+    {
+      "question": "Apa saja syarat pendaftaran?",
+      "answer": "Syarat utama meliputi Akta Kelahiran, Kartu Keluarga, dan Ijazah TK (jika ada)."
+    },
+    {
+      "question": "Berapa biaya seragam?",
+      "answer": "Biaya seragam berkisar antara Rp 500.000 - Rp 800.000 tergantung ukuran dan jenis."
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+# Agent Instructions: Phase 2 - Pusat Digital Literasi SDN Rengas
+
+## Core Objective
+Membangun platform literasi digital interaktif yang mencakup manajemen konten (PDF Flipbook, YouTube, Artikel) dan pelacakan aktivitas siswa secara real-time menggunakan Supabase tanpa mengorbankan privasi (anonim).
+
+## Atomic Changes Principles
+- Selesaikan satu fitur literasi sebelum pindah ke fitur analitik (misal: fokus pada `FlipbookPlayer` sebelum membuat `InteractionTracker`).
+- Jangan merusak fungsionalitas Phase 1 (School Profile) yang sudah berjalan.
+- Setiap komponen literasi wajib diuji performanya karena memuat aset berat (PDF/Iframe)[cite: 1].
+
+## Technical Requirements
+- **Directory Canonical**: Gunakan `src/components/features/literacy/` untuk konsistensi[cite: 1].
+- **Dynamic Reader**: `ReaderPage.jsx` memilih viewer secara dinamis berdasarkan field `type` dari Sanity[cite: 1].
+- **Style**: Modern, clean, professional. Warna utama: `bg-blue-600`[cite: 1].
+- **Data Source**: Fetch metadata materi via `@/services/cmsClient.js`[cite: 1].
+- **Interaction Tracker**: Fokus pada operasi INSERT anonim ke Supabase[cite: 1].
+- **Analytics Logic**: Gunakan `@/services/analytics.js` untuk query agregasi data trend[cite: 1].
+
+## Tracking & Analytics (Supabase)
+- **Metode**: Event Agregat Anonim (tanpa login)[cite: 1].
+- **InteractionTracker**: Hanya memicu event (view, scroll, play)[cite: 1].
+- **analytics.js**: Berisi query/agregasi untuk menampilkan "Materi Terpopuler"[cite: 1].
+- **Privasi**: Gunakan `youtube-nocookie.com` untuk semua embed video YouTube[cite: 1].
+
+## Performance & Accessibility
+- **Lazy Loading**: Lazy-load untuk Iframe YouTube dan komponen reader berat[cite: 1].
+- **UX**: Tombol Play besar; materi harus dapat dinikmati tanpa berpindah platform[cite: 1].
+
+## Prohibited
+- No hardcoded content (must use Sanity)[cite: 1].
+- No sensitive data storage (No IP, No Names)[cite: 1].
+- Jangan mengekspos Dashboard Statistik ke rute publik tanpa auth[cite: 1].
