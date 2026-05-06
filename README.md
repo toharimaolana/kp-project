@@ -1,16 +1,31 @@
-# React + Vite
+# SDN Rengas Portal & Digital Literacy Hub 🚀
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Proyek ini adalah platform digital terintegrasi untuk **SDN Rengas**, yang menggabungkan Website Profil Sekolah dan Pusat Literasi Digital interaktif. Dibangun dengan arsitektur modern untuk memastikan performa tinggi dan kemudahan pengelolaan konten.
 
-Currently, two official plugins are available:
+## 📂 Struktur Proyek (Monorepo)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **`/` (Root)**: Frontend utama menggunakan React + Vite.
+- **`/portal-rengas`**: Backend & CMS menggunakan Sanity Studio.
+- **`/src`**: Source code frontend (Components, Pages, Services, Layouts).
 
-## React Compiler
+## 🛠️ Teknologi Utama
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Frontend**: React 19, Vite, Tailwind CSS 4, Framer Motion.
+- **CMS**: Sanity.io (Headless CMS).
+- **Database & Analytics**: Supabase.
+- **Icons**: Lucide React.
+- **PDF Engine**: React-PDF & PDF.js.
 
-## Expanding the ESLint configuration
+## 🚀 Cara Menjalankan Secara Lokal
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### 1. Persiapan
+Pastikan Anda sudah menginstal [Node.js](https://nodejs.org/).
+
+### 2. Jalankan Frontend
+```bash
+# Instal dependensi di root
+npm install
+
+# Buat file .env dan masukkan API Keys (Sanity & Supabase)
+# Jalankan server pengembangan
+npm run dev
