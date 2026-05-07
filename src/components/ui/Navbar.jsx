@@ -24,7 +24,8 @@ const Navbar = () => {
   const navLinks = [
     { name: 'Beranda', href: '/' },
     { name: 'Berita', href: '/#news' },
-    { name: 'PPDB', href: '/#ppdb' },
+    { name: 'Galeri', href: '/#galeri' },
+    // { name: 'PPDB', href: '/#ppdb' },
     { name: 'Guru', href: '/#teachers' },
     { name: 'Ekskul', href: '/#ekskul' },
     { name: 'Kontak', href: '/#contact' },

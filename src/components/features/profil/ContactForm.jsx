@@ -9,7 +9,7 @@ const ContactForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    
+
     // Simulasi integrasi Web3Forms/Formspree
     setTimeout(() => {
       setSubmitted(true);
@@ -24,7 +24,7 @@ const ContactForm = () => {
           <div>
             <h2 className="text-4xl font-extrabold text-gray-900 mb-6 leading-tight">Hubungi Kami & Buku Tamu</h2>
             <p className="text-lg text-gray-600 mb-10 leading-relaxed">
-              Punya pertanyaan seputar sekolah atau ingin menjadwalkan kunjungan? 
+              Punya pertanyaan seputar sekolah atau ingin menjadwalkan kunjungan?
               Silakan isi formulir di samping, tim kami akan merespons sesegera mungkin.
             </p>
 
@@ -35,7 +35,7 @@ const ContactForm = () => {
                 </div>
                 <div>
                   <h4 className="font-bold text-gray-900">Alamat Sekolah</h4>
-                  <p className="text-gray-600 text-sm">Jl. Raya Rengas No. 123, Tangerang Selatan</p>
+                  <p className="text-gray-600 text-sm">Jl. Teratai Putih Rt. 006/009, Kel. Rengas, Kec. Ciputat Timur, Kota Tangerang Selatan, Prov. Banten. NPSN 20602762.</p>
                 </div>
               </div>
               <div className="flex items-start">
@@ -44,7 +44,7 @@ const ContactForm = () => {
                 </div>
                 <div>
                   <h4 className="font-bold text-gray-900">Telepon</h4>
-                  <p className="text-gray-600 text-sm">(021) 7401234 / 0812-3456-7890</p>
+                  <p className="text-gray-600 text-sm"> (021) 74702721</p>
                 </div>
               </div>
               <div className="flex items-start">
@@ -53,7 +53,7 @@ const ContactForm = () => {
                 </div>
                 <div>
                   <h4 className="font-bold text-gray-900">Email</h4>
-                  <p className="text-gray-600 text-sm">info@sdnrengas.sch.id</p>
+                  <p className="text-gray-600 text-sm">sdnrengas.tangsel@gmail.com</p>
                 </div>
               </div>
             </div>
@@ -61,8 +61,8 @@ const ContactForm = () => {
 
           <div className="bg-gray-50 p-8 sm:p-12 rounded-3xl border border-gray-100 shadow-sm">
             {submitted ? (
-              <motion.div 
-                initial={{ opacity: 0, scale: 0.9 }} 
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 className="text-center py-10"
               >
@@ -71,7 +71,7 @@ const ContactForm = () => {
                 </div>
                 <h3 className="text-2xl font-bold text-gray-900 mb-2">Pesan Terkirim!</h3>
                 <p className="text-gray-600 mb-6">Terima kasih telah menghubungi kami. Kami akan segera menghubungi Anda kembali.</p>
-                <button 
+                <button
                   onClick={() => setSubmitted(false)}
                   className="text-blue-600 font-bold hover:underline"
                 >

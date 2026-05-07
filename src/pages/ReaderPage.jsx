@@ -7,6 +7,7 @@ import { getMateriLiterasiBySlug, isCMSConfigured } from '@/services/cmsClient';
 const MotionDiv = motion.div;
 
 const PdfScroller = lazy(() => import('@/components/features/literacy/PdfScroller'));
+const YoutubePlayer = lazy(() => import('@/components/features/literacy/YoutubePlayer'));
 
 /**
  * Halaman detail materi — pemutar flipbook/video mengikuti tahap berikutnya (.cursorrules Phase 2).
@@ -115,19 +116,28 @@ const ReaderPage = () => {
                     fallback={
                       <div className="flex flex-col items-center justify-center p-12 bg-slate-50 rounded-2xl border border-slate-100">
                         <Loader2 className="w-8 h-8 text-blue-600 animate-spin mb-3" />
-                        <p className="text-sm font-medium text-slate-600">Menyiapkan buku...</p>
+                        <p className="text-sm font-medium text-slate-600">Menyiapkan PDF Viewer...</p>
                       </div>
                     }
                   >
                     <PdfScroller fileUrl={item.pdfUrl} />
                   </Suspense>
+                ) : item.materialType === 'video' && item.youtubeUrl ? (
+                  <Suspense
+                    fallback={
+                      <div className="flex flex-col items-center justify-center p-12 bg-slate-50 rounded-2xl border border-slate-100">
+                        <Loader2 className="w-8 h-8 text-red-600 animate-spin mb-3" />
+                        <p className="text-sm font-medium text-slate-600">Menyiapkan Video Player...</p>
+                      </div>
+                    }
+                  >
+                    <YoutubePlayer youtubeUrl={item.youtubeUrl} title={item.title} />
+                  </Suspense>
                 ) : (
-                  <div className="flex items-start gap-3 rounded-xl bg-blue-50 p-4 text-sm text-slate-700 ring-1 ring-blue-100">
-                    <BookOpen className="mt-0.5 h-5 w-5 shrink-0 text-blue-600" aria-hidden />
-                    <p>
-                      <strong>Pemutar interaktif</strong> (video YouTube, atau artikel penuh) akan
-                      ditampilkan di tahap implementasi berikutnya sesuai tipe materi:{' '}
-                      <span className="font-semibold text-blue-700">{item.materialType}</span>.
+                  <div className="flex flex-col items-center justify-center gap-3 rounded-2xl bg-red-50 p-8 text-center text-red-600 border border-red-100">
+                    <AlertCircle className="h-10 w-10 text-red-400" aria-hidden />
+                    <p className="font-semibold">
+                      Tipe materi "<span className="text-red-700">{item.materialType}</span>" tidak dikenali atau tidak didukung oleh sistem.
                     </p>
                   </div>
                 )}

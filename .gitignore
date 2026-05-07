@@ -33,3 +33,7 @@ portal-rengas/dist/
 *.njsproj
 *.sln
 *.sw?
+
+.vercel
+.env.production
+

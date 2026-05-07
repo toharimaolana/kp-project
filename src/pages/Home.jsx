@@ -1,6 +1,7 @@
 import React from 'react';
 import Hero from '../components/ui/Hero';
 import NewsPortal from '../components/features/profil/NewsPortal';
+import ActivityGallery from '../components/features/profil/ActivityGallery';
 import TeacherDirectory from '../components/features/profil/TeacherDirectory';
 import PPDBStepper from '../components/features/profil/PPDBStepper';
 import ExtracurricularFilter from '../components/features/profil/ExtracurricularFilter';
@@ -21,9 +22,9 @@ const Home = () => (
       <NewsPortal />
     </section>
 
-    <section id="ppdb">
+    {/* <section id="ppdb">
       <PPDBStepper />
-    </section>
+    </section> */}
 
     <section id="ekskul">
       <ExtracurricularFilter />
@@ -31,6 +32,10 @@ const Home = () => (
 
     <section id="teachers">
       <TeacherDirectory />
+    </section>
+
+    <section id="galeri">
+      <ActivityGallery />
     </section>
 
     <section id="contact">

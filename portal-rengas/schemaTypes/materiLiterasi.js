@@ -31,7 +31,6 @@ export default {
         list: [
           { title: 'Flipbook (PDF)', value: 'flipbook' },
           { title: 'Video (YouTube)', value: 'video' },
-          { title: 'Artikel', value: 'artikel' },
         ],
         layout: 'radio',
       },
@@ -87,16 +86,6 @@ export default {
       type: 'url',
       description: 'Hanya diwajibkan jika Tipe Materi adalah Video',
       hidden: ({ document }) => document?.materialType !== 'video',
-    },
-    {
-      name: 'body',
-      title: 'Konten Artikel',
-      type: 'array',
-      of: [
-        { type: 'block' },
-        { type: 'image', options: { hotspot: true } }
-      ],
-      description: 'Digunakan untuk tipe materi Artikel atau penjelasan tambahan',
     },
   ],
 };

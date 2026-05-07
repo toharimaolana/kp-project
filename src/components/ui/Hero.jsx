@@ -7,9 +7,22 @@ import {
   GraduationCap,
   BookOpen,
   Users,
-  ArrowUpRight
+  ArrowUpRight,
 } from 'lucide-react';
 import { getProfilSekolah } from '@/services/cmsClient';
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 24 },
+  visible: (delay = 0) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      delay,
+      duration: 0.7,
+      ease: [0.22, 1, 0.36, 1],
+    },
+  }),
+};
 
 const Hero = () => {
   const [profil, setProfil] = useState(null);
@@ -17,6 +30,7 @@ const Hero = () => {
 
   useEffect(() => {
     let mounted = true;
+
     const fetchProfil = async () => {
       try {
         const data = await getProfilSekolah();
@@ -27,126 +41,174 @@ const Hero = () => {
         if (mounted) setLoadingProfil(false);
       }
     };
+
     fetchProfil();
-    return () => { mounted = false; };
+
+    return () => {
+      mounted = false;
+    };
   }, []);
 
-  const stats = useMemo(() => [
-    {
-      label: 'Akreditasi',
-      value: profil?.akreditasi ?? '—',
-      icon: Award,
-      color: 'text-amber-400'
-    },
-    {
-      label: 'Siswa',
-      value: profil?.jumlahSiswa ?? '0',
-      icon: GraduationCap,
-      color: 'text-blue-400'
-    },
-    {
-      label: 'Guru & Staf',
-      value: profil?.jumlahGuruPegawai ?? '0',
-      icon: Users,
-      color: 'text-emerald-400'
-    },
-  ], [profil]);
+  const stats = useMemo(
+    () => [
+      {
+        label: 'Akreditasi',
+        value: profil?.akreditasi ?? '—',
+        icon: Award,
+      },
+      {
+        label: 'Siswa',
+        value: profil?.jumlahSiswa ?? '0',
+        icon: GraduationCap,
+      },
+      {
+        label: 'Guru & Staf',
+        value: profil?.jumlahGuruPegawai ?? '0',
+        icon: Users,
+      },
+    ],
+    [profil]
+  );
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center pt-20 pb-12 overflow-hidden bg-[#020617]">
-      {/* 1. Background Effects */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-600/20 blur-[120px] rounded-full animate-pulse" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-indigo-600/10 blur-[120px] rounded-full" />
-        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-[0.03] shadow-inner" />
+    <section className="relative overflow-hidden bg-[#020617] pt-28 pb-16 md:pt-32 md:pb-24">
+      {/* background */}
+      <div className="absolute inset-0">
+        <div className="absolute left-0 top-0 h-72 w-72 rounded-full bg-blue-600/10 blur-[120px]" />
+        <div className="absolute right-0 top-20 h-72 w-72 rounded-full bg-indigo-500/10 blur-[120px]" />
+        <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(255,255,255,0.03),transparent)]" />
       </div>
 
-      <div className="container mx-auto px-6 z-10">
-        <div className="max-w-5xl mx-auto text-center">
-
-          {/* Badge */}
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold tracking-widest mb-8"
-          >
-            <span className="flex h-2 w-2 rounded-full bg-blue-500 animate-ping" />
-            INDONESIA EMAS 2045
-          </motion.div>
-
-          {/* Main Heading */}
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="text-4xl md:text-7xl font-black text-white leading-[1.1] tracking-tight mb-8"
-          >
-            Membangun Karakter di <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-400 to-blue-600">
-              Era Digital Terdepan.
-            </span>
-          </motion.h1>
-
-          {/* Subtext */}
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.4 }}
-            className="text-base md:text-xl text-slate-400 max-w-2xl mx-auto mb-12 leading-relaxed"
-          >
-            SDN Rengas menghadirkan ekosistem pendidikan cerdas yang menggabungkan adab, kreativitas, dan inovasi teknologi untuk masa depan anak bangsa.
-          </motion.p>
-
-          {/* Action Buttons */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6 }}
-            className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-20"
-          >
-            <Link
-              to="/literasi"
-              className="group w-full sm:w-auto px-8 py-4 bg-blue-600 text-white rounded-2xl font-bold flex items-center justify-center gap-2 hover:bg-blue-500 transition-all shadow-lg shadow-blue-600/25"
+      <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
+        <div className="grid items-center gap-12 lg:grid-cols-2">
+          {/* Left */}
+          <div className="max-w-xl">
+            <motion.div
+              variants={fadeUp}
+              initial="hidden"
+              animate="visible"
+              custom={0.05}
+              className="inline-flex items-center gap-2 rounded-full border border-blue-400/20 bg-blue-500/10 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-blue-300"
             >
-              <BookOpen size={20} /> Pusat Literasi
-              <ChevronRight size={18} className="group-hover:translate-x-1 transition-transform" />
-            </Link>
-            <Link
-              to="/profil"
-              className="w-full sm:w-auto px-8 py-4 bg-white/5 text-white border border-white/10 rounded-2xl font-bold flex items-center justify-center gap-2 hover:bg-white/10 transition-all backdrop-blur-md"
-            >
-              Kenali Kami <ArrowUpRight size={18} />
-            </Link>
-          </motion.div>
+              <span className="h-2 w-2 rounded-full bg-blue-400" />
+              Indonesia Emas 2045
+            </motion.div>
 
-          {/* Stats Cards - Bottom Layout */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.8 }}
-            className="grid grid-cols-1 md:grid-cols-3 gap-4"
-          >
-            {stats.map((stat, idx) => (
-              <div
-                key={idx}
-                className="group relative p-6 rounded-3xl bg-white/[0.03] border border-white/5 backdrop-blur-xl hover:bg-white/[0.06] hover:border-blue-500/30 transition-all duration-500"
+            <motion.h1
+              variants={fadeUp}
+              initial="hidden"
+              animate="visible"
+              custom={0.12}
+              className="mt-6 text-4xl font-black leading-[1.05] tracking-[-0.03em] text-white sm:text-5xl lg:text-6xl"
+            >
+              Pendidikan Dasar yang
+              <span className="block text-slate-300">
+                Hangat, Modern, dan Bermakna.
+              </span>
+            </motion.h1>
+
+            <motion.p
+              variants={fadeUp}
+              initial="hidden"
+              animate="visible"
+              custom={0.2}
+              className="mt-6 text-base leading-8 text-slate-400 md:text-lg"
+            >
+              SDN Rengas membangun lingkungan belajar yang menumbuhkan
+              karakter, rasa ingin tahu, dan kesiapan siswa menghadapi era
+              digital dengan pendekatan yang positif dan adaptif.
+            </motion.p>
+
+            <motion.div
+              variants={fadeUp}
+              initial="hidden"
+              animate="visible"
+              custom={0.28}
+              className="mt-8 flex flex-col gap-4 sm:flex-row"
+            >
+              <Link
+                to="/profil"
+                className="group inline-flex items-center justify-center gap-2 rounded-2xl bg-blue-600 px-6 py-3.5 text-sm font-semibold text-white transition-all duration-300 hover:bg-blue-500"
               >
-                <div className="flex items-center justify-between mb-4">
-                  <div className={`p-2 rounded-xl bg-white/5 ${stat.color}`}>
-                    <stat.icon size={24} />
+                Kenali Kami
+                <ChevronRight
+                  size={18}
+                  className="transition-transform duration-300 group-hover:translate-x-1"
+                />
+              </Link>
+
+              <Link
+                to="/literasi"
+                className="group inline-flex items-center justify-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-6 py-3.5 text-sm font-semibold text-white backdrop-blur-md transition-all duration-300 hover:bg-white/10"
+              >
+                <BookOpen size={18} />
+                Pusat Literasi
+                <ArrowUpRight
+                  size={17}
+                  className="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                />
+              </Link>
+            </motion.div>
+
+            {/* simple stats */}
+            <motion.div
+              variants={fadeUp}
+              initial="hidden"
+              animate="visible"
+              custom={0.36}
+              className="mt-10 grid grid-cols-3 gap-4 border-t border-white/10 pt-6"
+            >
+              {stats.map((stat, index) => (
+                <div key={index}>
+                  <div className="flex items-center gap-2 text-slate-500">
+                    <stat.icon size={15} />
+                    <span className="text-[11px] uppercase tracking-[0.14em]">
+                      {stat.label}
+                    </span>
                   </div>
-                  <div className="h-1 w-12 bg-white/5 rounded-full overflow-hidden">
-                    <div className="h-full bg-blue-500 w-1/2 group-hover:w-full transition-all duration-700" />
-                  </div>
+                  <p className="mt-2 text-xl font-bold text-white md:text-2xl">
+                    {loadingProfil ? (
+                      <span className="animate-pulse">...</span>
+                    ) : (
+                      stat.value
+                    )}
+                  </p>
                 </div>
-                <div className="text-left">
-                  <p className="text-slate-500 text-xs font-bold uppercase tracking-widest mb-1">{stat.label}</p>
-                  <h3 className="text-3xl font-black text-white">
-                    {loadingProfil ? <span className="animate-pulse">...</span> : stat.value}
-                  </h3>
-                </div>
+              ))}
+            </motion.div>
+          </div>
+
+          {/* Right */}
+          <motion.div
+            variants={fadeUp}
+            initial="hidden"
+            animate="visible"
+            custom={0.18}
+            className="relative"
+          >
+            <div className="overflow-hidden rounded-[28px] border border-white/10 bg-white/[0.04] p-3 shadow-[0_24px_80px_rgba(0,0,0,0.35)] backdrop-blur-xl">
+              <div className="overflow-hidden rounded-[22px]">
+                <img
+                  src="https://images.unsplash.com/photo-1577896851231-70ef18881754?q=80&w=1000"
+                  alt="Lingkungan belajar SDN Rengas"
+                  className="h-[320px] w-full object-cover sm:h-[420px] lg:h-[520px]"
+                />
               </div>
-            ))}
+            </div>
+
+            <div className="mt-4 flex items-center justify-between rounded-2xl border border-white/10 bg-white/[0.03] px-5 py-4 backdrop-blur-md">
+              <div>
+                <p className="text-[11px] uppercase tracking-[0.16em] text-slate-500">
+                  Lingkungan Belajar
+                </p>
+                <p className="mt-1 text-sm font-medium text-white">
+                  Aman, nyaman, dan mendukung tumbuh kembang siswa
+                </p>
+              </div>
+              <div className="hidden h-10 w-10 items-center justify-center rounded-full bg-blue-500/10 text-blue-300 sm:flex">
+                <ArrowUpRight size={18} />
+              </div>
+            </div>
           </motion.div>
         </div>
       </div>
