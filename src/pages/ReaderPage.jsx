@@ -1,8 +1,13 @@
 import React, { useEffect, useState, Suspense, lazy } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowLeft, BookOpen, Loader2, AlertCircle } from 'lucide-react';
+import { ArrowLeft, BookOpen, Loader2, AlertCircle, Eye, Heart } from 'lucide-react';
 import { getMateriLiterasiBySlug, isCMSConfigured } from '@/services/cmsClient';
+import { insertReadingLog, insertEngagementEvent, getEngagementMetrics } from '@/services/readingLogService';
+import { useReadingTimer } from '@/hooks/useReadingTimer';
+import GuestCheckInModal from '@/components/features/literacy/GuestCheckInModal';
+import ReadingTimer from '@/components/features/literacy/ReadingTimer';
+import SuccessModal from '@/components/features/literacy/SuccessModal';
 
 const MotionDiv = motion.div;
 
@@ -14,9 +19,23 @@ const YoutubePlayer = lazy(() => import('@/components/features/literacy/YoutubeP
  */
 const ReaderPage = () => {
   const { slug } = useParams();
+  const navigate = useNavigate();
   const [item, setItem] = useState(null);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
+  
+  const [metrics, setMetrics] = useState({ views: 0, likes: 0 });
+  const [isLiked, setIsLiked] = useState(false);
+
+  useEffect(() => {
+    if (!slug) return;
+    getEngagementMetrics(slug).then(data => setMetrics(data));
+    
+    if (localStorage.getItem(`liked_${slug}`)) {
+      setIsLiked(true);
+    }
+  }, [slug]);
 
   useEffect(() => {
     let alive = true;
@@ -53,6 +72,60 @@ const ReaderPage = () => {
     };
   }, [slug]);
 
+  const duration = item?.duration_minutes || 15;
+
+  const handleFinishSession = async (sessionData, status) => {
+    const { success, error } = await insertReadingLog({
+      student_name: sessionData.name,
+      student_class: sessionData.class,
+      module_slug: sessionData.moduleSlug,
+      status: status
+    });
+    
+    if (!success) {
+      console.error("Gagal menyimpan data ke database:", error);
+    }
+    
+    setShowSuccess(true);
+  };
+
+  const { session, formattedTime, startSession, finishSession } = useReadingTimer(
+    slug,
+    duration,
+    handleFinishSession
+  );
+
+  const handleCheckIn = (name, studentClass) => {
+    startSession(name, studentClass);
+  };
+
+  const handleGoHome = () => {
+    navigate('/literasi');
+  };
+
+  const hasActiveSession = !!session;
+
+  useEffect(() => {
+    if (hasActiveSession && slug) {
+      const viewKey = `viewed_${slug}`;
+      if (!sessionStorage.getItem(viewKey)) {
+        insertEngagementEvent(slug, 'view');
+        sessionStorage.setItem(viewKey, 'true');
+        setMetrics(prev => ({ ...prev, views: prev.views + 1 }));
+      }
+    }
+  }, [hasActiveSession, slug]);
+
+  const handleLike = async () => {
+    if (isLiked || !slug) return;
+    
+    setIsLiked(true);
+    setMetrics(prev => ({ ...prev, likes: prev.likes + 1 }));
+    localStorage.setItem(`liked_${slug}`, 'true');
+    
+    await insertEngagementEvent(slug, 'like');
+  };
+
   if (loading) {
     return (
       <main className="flex min-h-screen flex-col items-center justify-center gap-3 bg-slate-50 pt-24 text-slate-600">
@@ -82,8 +155,28 @@ const ReaderPage = () => {
   }
 
   return (
-    <main className="min-h-screen bg-slate-50 pb-16 pt-24 md:pt-28">
-      <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+    <main className="min-h-screen bg-slate-50 pb-40 pt-24 md:pt-28">
+      <GuestCheckInModal 
+        isOpen={!hasActiveSession && !showSuccess} 
+        onSubmit={handleCheckIn}
+        onCancel={handleGoHome}
+      />
+      
+      <SuccessModal 
+        isOpen={showSuccess} 
+        onHomeRedirect={handleGoHome} 
+        isLiked={isLiked}
+        onLike={handleLike}
+      />
+
+      {hasActiveSession && !showSuccess && (
+        <ReadingTimer 
+          formattedTime={formattedTime} 
+          onFinish={finishSession} 
+        />
+      )}
+
+      <div className={`mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 ${!hasActiveSession || showSuccess ? 'blur-sm pointer-events-none opacity-50 select-none' : ''}`}>
         <MotionDiv initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35 }}>
           <Link
             to="/literasi"
@@ -97,10 +190,14 @@ const ReaderPage = () => {
             {item.thumbnail ? (
               <img
                 src={item.thumbnail}
-                alt={item.title ? `Ilustrasi: ${item.title}` : ''}
+                alt={item.title ? `Ilustrasi: ${item.title}` : 'Ilustrasi materi literasi'}
                 className="aspect-video w-full object-cover"
               />
-            ) : null}
+            ) : (
+              <div className="flex aspect-video w-full items-center justify-center bg-gradient-to-br from-blue-100 to-blue-50">
+                <BookOpen className="h-16 w-16 text-blue-200" aria-hidden="true" />
+              </div>
+            )}
             <div className="p-6 sm:p-8">
               <p className="text-xs font-bold uppercase tracking-wider text-blue-600">
                 Kelas {item.grade}
@@ -108,6 +205,18 @@ const ReaderPage = () => {
               </p>
               <h1 className="mt-2 text-2xl font-black tracking-tight text-slate-900 sm:text-3xl">{item.title}</h1>
               {item.excerpt ? <p className="mt-4 text-slate-600 leading-relaxed">{item.excerpt}</p> : null}
+
+              {/* Engagement Metrics */}
+              <div className="mt-6 flex items-center gap-6 border-t border-b border-slate-100 py-3">
+                <div className="flex items-center gap-1.5 text-sm font-semibold text-slate-500">
+                  <Eye className="w-4 h-4" />
+                  <span>{metrics.views} Views</span>
+                </div>
+                <div className="flex items-center gap-1.5 text-sm font-semibold text-slate-500">
+                  <Heart className={`w-4 h-4 ${metrics.likes > 0 ? 'text-red-500 fill-current' : ''}`} />
+                  <span>{metrics.likes} Likes</span>
+                </div>
+              </div>
 
               {/* Player Area */}
               <div className="mt-8 w-full">

@@ -17,7 +17,9 @@ dist-ssr
 # Dependency folders
 node_modules/
 dist/
+.env    
 .env.local
+.env.production
 
 # Sanity specific
 portal-rengas/node_modules/

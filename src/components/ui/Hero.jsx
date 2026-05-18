@@ -127,7 +127,7 @@ const Hero = () => {
               className="mt-8 flex flex-col gap-4 sm:flex-row"
             >
               <Link
-                to="/profil"
+                to="/"
                 className="group inline-flex items-center justify-center gap-2 rounded-2xl bg-blue-600 px-6 py-3.5 text-sm font-semibold text-white transition-all duration-300 hover:bg-blue-500"
               >
                 Kenali Kami
