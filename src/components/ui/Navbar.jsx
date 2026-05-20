@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, School, Settings } from 'lucide-react';
+import { Menu, X, Settings } from 'lucide-react';
 
 const getSanityStudioUrl = () => {
   const projectId = import.meta.env.VITE_SANITY_PROJECT_ID;
@@ -36,9 +36,6 @@ const Navbar = () => {
       }`}>
       <div className="container mx-auto px-4 flex justify-between items-center">
         <div className="flex items-center space-x-2">
-          <div className="bg-blue-600 p-2 rounded-lg text-white">
-            <School size={24} />
-          </div>
           <span className={`font-black text-xl tracking-tight ${isScrolled ? 'text-gray-900' : 'text-white'}`}>
             SDN RENGAS
           </span>

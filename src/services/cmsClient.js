@@ -1,4 +1,5 @@
 import { createClient } from '@sanity/client';
+import imageUrlBuilder from '@sanity/image-url';
 
 const projectId = import.meta.env.VITE_SANITY_PROJECT_ID;
 const rawSanityToken = import.meta.env.VITE_SANITY_TOKEN;
@@ -18,13 +19,25 @@ export const client = projectId
     })
   : null;
 
+// Initialize Sanity Image Builder
+const builder = client ? imageUrlBuilder(client) : null;
+
+export function urlFor(source) {
+  return builder ? builder.image(source) : null;
+}
+
 export const isCMSConfigured = !!projectId;
 
 const newsFields = `
   _id,
   title,
   "slug": slug.current,
-  "thumbnail": mainImage.asset->url,
+  mainImage {
+    asset->{
+      _id,
+      url
+    }
+  },
   publishedAt,
   categories[]->{title},
   body,
@@ -34,7 +47,12 @@ const newsFields = `
 const teacherFields = `
   _id,
   name,
-  "image": photo.asset->url,
+  photo {
+    asset->{
+      _id,
+      url
+    }
+  },
   position,
   subject,
   order
@@ -43,7 +61,12 @@ const teacherFields = `
 const galleryFields = `
   _id,
   title,
-  "imageUrl": photo.asset->url,
+  photo {
+    asset->{
+      _id,
+      url
+    }
+  },
   "caption": photo.caption,
   publishedAt
 `;
@@ -55,7 +78,12 @@ const literacyMaterialFields = `
   materialType,
   grade,
   theme,
-  "thumbnail": thumbnail.asset->url,
+  thumbnail {
+    asset->{
+      _id,
+      url
+    }
+  },
   durationMinutes,
   sortOrder,
   excerpt
@@ -77,7 +105,7 @@ export const getBerita = async () => {
       id: item._id,
       title: item.title,
       slug: item.slug,
-      thumbnail: item.thumbnail,
+      thumbnail: item.mainImage,
       date: item.publishedAt,
       category: item.categories?.[0]?.title || 'Berita',
       excerpt: item.excerpt || '',
@@ -99,7 +127,7 @@ export const getBeritaBySlug = async (slug) => {
       id: result._id,
       title: result.title,
       slug: result.slug,
-      thumbnail: result.thumbnail,
+      thumbnail: result.mainImage,
       date: result.publishedAt,
       category: result.categories?.[0]?.title || 'Berita',
       excerpt: result.excerpt || '',
@@ -119,7 +147,7 @@ export const getGuru = async () => {
     return result.map(item => ({
       id: item._id,
       name: item.name,
-      image: item.image,
+      image: item.photo,
       position: item.position || '',
       subject: item.subject || '',
       order: item.order || 0,
@@ -138,7 +166,7 @@ export const getGaleri = async () => {
     return result.map(item => ({
       id: item._id,
       title: item.title,
-      imageUrl: item.imageUrl,
+      imageUrl: item.photo,
       caption: item.caption,
       date: item.publishedAt,
     }));

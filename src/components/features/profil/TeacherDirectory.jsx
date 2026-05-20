@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, User, Loader2 } from 'lucide-react';
-import { getGuru } from '@/services/cmsClient';
+import { getGuru, urlFor } from '@/services/cmsClient';
 import data from '@/data/mockData.json';
 
 const TeacherCard = ({ teacher, index }) => (
@@ -15,7 +15,7 @@ const TeacherCard = ({ teacher, index }) => (
   >
     <div className="aspect-square relative overflow-hidden bg-gray-200">
       <img
-        src={teacher.image}
+        src={teacher.image ? (typeof teacher.image === 'string' ? teacher.image : urlFor(teacher.image).url()) : 'https://via.placeholder.com/300x300?text=No+Photo'}
         alt={teacher.name}
         className="w-full h-full object-cover"
       />
@@ -40,7 +40,7 @@ const TeacherDirectory = () => {
     const fetchTeachers = async () => {
       try {
         setLoading(true);
-        
+
         if (import.meta.env.VITE_SANITY_PROJECT_ID) {
           const data = await getGuru();
           setTeachers(data);
@@ -82,7 +82,7 @@ const TeacherDirectory = () => {
         <div className="max-w-2xl mx-auto mb-10 text-center">
           <h2 className="text-3xl font-bold text-gray-900 mb-4">Direktori Guru & Staf</h2>
           <p className="text-gray-600">Mengenal lebih dekat para pendidik hebat di SD Negeri Rengas.</p>
-          
+
           <div className="mt-8 relative">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
               <Search className="h-5 w-5 text-gray-400" />
@@ -97,7 +97,7 @@ const TeacherDirectory = () => {
           </div>
         </div>
 
-        <motion.div 
+        <motion.div
           layout
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
         >
@@ -109,7 +109,7 @@ const TeacherDirectory = () => {
         </motion.div>
 
         {filteredTeachers.length === 0 && (
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             className="text-center py-20 text-gray-500"

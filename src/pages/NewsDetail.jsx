@@ -3,7 +3,7 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import { PortableText } from '@portabletext/react';
 import { motion } from 'framer-motion';
 import { ArrowLeft, Calendar, Tag, AlertCircle, Loader2, Share2 } from 'lucide-react';
-import { getBeritaBySlug } from '../services/cmsClient';
+import { getBeritaBySlug, urlFor } from '../services/cmsClient';
 
 // ==========================================
 // 1. UI COMPONENTS (Loading & Error States)
@@ -83,12 +83,12 @@ const ErrorState = ({ icon: Icon, title, message, actionText, actionLink, onActi
 const ptComponents = {
   types: {
     image: ({ value }) => {
-      const { asset, alt, caption } = value || {};
+      const { alt, caption } = value || {};
       return (
         <figure className="my-10 w-full">
           <div className="overflow-hidden rounded-[1.5rem] border border-slate-200/80 bg-slate-50 shadow-md shadow-slate-200/60">
             <img 
-              src={asset?.url || '/placeholder-image.png'}
+              src={value ? urlFor(value).url() : '/placeholder-image.png'}
               alt={alt || 'Gambar konten'}
               className="h-auto max-h-[520px] w-full object-cover"
               loading="lazy"
@@ -209,7 +209,7 @@ const NewsDetail = () => {
   });
   
   const categoryName = news.category || (Array.isArray(news.categories) && news.categories[0]) || 'Berita Umum';
-  const heroImage = news.thumbnail || news.mainImage || '/placeholder-hero.jpg';
+  const heroImage = news.thumbnail ? (typeof news.thumbnail === 'string' ? news.thumbnail : urlFor(news.thumbnail).url()) : '/placeholder-hero.jpg';
 
   return (
     <motion.article 

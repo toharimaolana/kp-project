@@ -189,7 +189,7 @@ const Hero = () => {
             <div className="overflow-hidden rounded-[28px] border border-white/10 bg-white/[0.04] p-3 shadow-[0_24px_80px_rgba(0,0,0,0.35)] backdrop-blur-xl">
               <div className="overflow-hidden rounded-[22px]">
                 <img
-                  src="https://images.unsplash.com/photo-1577896851231-70ef18881754?q=80&w=1000"
+                  src="/footage-sdnrengas.jpeg"
                   alt="Lingkungan belajar SDN Rengas"
                   className="h-[320px] w-full object-cover sm:h-[420px] lg:h-[520px]"
                 />

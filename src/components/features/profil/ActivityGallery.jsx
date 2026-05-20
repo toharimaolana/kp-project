@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Image as ImageIcon, Loader2 } from 'lucide-react';
-import { getGaleri } from '@/services/cmsClient';
+import { getGaleri, urlFor } from '@/services/cmsClient';
 
 const ActivityGallery = () => {
   const [gallery, setGallery] = useState([]);
@@ -63,7 +63,7 @@ const ActivityGallery = () => {
               className="break-inside-avoid group relative rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl hover:shadow-blue-900/10 transition-all duration-500 bg-white"
             >
               <img
-                src={item.imageUrl}
+                src={item.imageUrl ? (typeof item.imageUrl === 'string' ? item.imageUrl : urlFor(item.imageUrl).url()) : '/placeholder-school.jpg'}
                 alt={item.title}
                 loading="lazy"
                 className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-700 ease-out"

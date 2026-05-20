@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Calendar, ArrowRight, Loader2, AlertCircle } from 'lucide-react';
-import { getBerita } from '@/services/cmsClient';
+import { getBerita, urlFor } from '@/services/cmsClient';
 import { fetchNews as fetchMockNews } from '@/services/cmsService';
 
 const NewsCard = ({ news, index }) => (
@@ -17,7 +17,7 @@ const NewsCard = ({ news, index }) => (
     >
       <div className="h-48 overflow-hidden relative">
         <img
-          src={news.thumbnail || 'https://via.placeholder.com/400x250?text=No+Image'}
+          src={news.thumbnail ? (typeof news.thumbnail === 'string' ? news.thumbnail : urlFor(news.thumbnail).url()) : 'https://via.placeholder.com/400x250?text=No+Image'}
           alt={news.title}
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
         />
