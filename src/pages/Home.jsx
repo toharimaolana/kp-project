@@ -22,9 +22,9 @@ const Home = () => (
       <NewsPortal />
     </section>
 
-    {/* <section id="ppdb">
+    <section id="ppdb">
       <PPDBStepper />
-    </section> */}
+    </section>
 
     <section id="ekskul">
       <ExtracurricularFilter />

@@ -18,8 +18,8 @@ const PPDBStepper = () => {
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Informasi PPDB 2024</h2>
-            <p className="text-gray-600">Alur pendaftaran siswa baru SDN Rengas yang transparan dan mudah.</p>
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">Informasi SPMB 2026</h2>
+            <p className="text-gray-600">Alur pendaftaran murid baru SDN Rengas yang transparan dan mudah.</p>
           </div>
 
           {/* Stepper UI */}
@@ -61,7 +61,7 @@ const PPDBStepper = () => {
               </div>
               <ul className="space-y-4">
                 <li className="flex justify-between items-center p-3 bg-gray-50 rounded-lg hover:bg-blue-50 transition-colors group">
-                  <span className="text-sm font-medium text-gray-700">Brosur PPDB 2024.pdf</span>
+                  <span className="text-sm font-medium text-gray-700">Brosur SPMB 2026.pdf</span>
                   <button className="text-blue-600 p-2 hover:bg-white rounded-full transition-all">
                     <Download size={18} />
                   </button>
