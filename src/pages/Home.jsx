@@ -3,7 +3,6 @@ import Hero from '../components/ui/Hero';
 import NewsPortal from '../components/features/profil/NewsPortal';
 import ActivityGallery from '../components/features/profil/ActivityGallery';
 import TeacherDirectory from '../components/features/profil/TeacherDirectory';
-import PPDBStepper from '../components/features/profil/PPDBStepper';
 import ExtracurricularFilter from '../components/features/profil/ExtracurricularFilter';
 import ContactForm from '../components/features/profil/ContactForm';
 import VisionMission from '../components/features/profil/VisionMission';
