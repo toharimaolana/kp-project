@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /studio/
+
+Sitemap: https://web-sdnrengas.vercel.app/sitemap.xml

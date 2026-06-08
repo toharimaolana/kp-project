@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { useSEO } from '@/hooks/useSEO';
 import {
   AlertCircle,
   ArrowRight,
@@ -159,6 +160,12 @@ const MaterialCard = ({ item, analyticsBadge, metrics }) => {
 };
 
 const LiteracyHub = () => {
+  useSEO({
+    title: 'Pusat Hub Literasi Digital',
+    description: 'Akses materi literasi digital SDN Rengas. Temukan buku digital interaktif, video pembelajaran, dan artikel edukatif menarik untuk siswa.',
+    keywords: 'Hub Literasi SDN Rengas, Literasi Digital SD, Buku Digital SDN Rengas, Materi Belajar SDN Rengas'
+  });
+
   const [grade, setGrade] = useState(null);
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);

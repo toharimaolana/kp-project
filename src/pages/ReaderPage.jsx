@@ -5,6 +5,7 @@ import { ArrowLeft, BookOpen, Loader2, AlertCircle, Eye, Heart } from 'lucide-re
 import { getMateriLiterasiBySlug, isCMSConfigured } from '@/services/cmsClient';
 import { insertReadingLog, insertEngagementEvent, getEngagementMetrics } from '@/services/readingLogService';
 import { useReadingTimer } from '@/hooks/useReadingTimer';
+import { useSEO } from '@/hooks/useSEO';
 import GuestCheckInModal from '@/components/features/literacy/GuestCheckInModal';
 import ReadingTimer from '@/components/features/literacy/ReadingTimer';
 import SuccessModal from '@/components/features/literacy/SuccessModal';
@@ -27,6 +28,13 @@ const ReaderPage = () => {
   
   const [metrics, setMetrics] = useState({ views: 0, likes: 0 });
   const [isLiked, setIsLiked] = useState(false);
+
+  // Dynamic SEO configurations
+  useSEO({
+    title: item ? item.title : 'Memuat Materi...',
+    description: item ? (item.excerpt || `Baca modul "${item.title}" kelas ${item.grade} di Hub Literasi SDN Rengas.`) : 'Baca modul literasi digital interaktif di SDN Rengas.',
+    keywords: item ? `Materi Literasi, SDN Rengas, Kelas ${item.grade}, ${item.title}` : 'Materi Literasi, SDN Rengas, Literasi Digital'
+  });
 
   useEffect(() => {
     if (!slug) return;

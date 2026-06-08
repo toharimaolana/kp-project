@@ -3,6 +3,7 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import { PortableText } from '@portabletext/react';
 import { motion } from 'framer-motion';
 import { ArrowLeft, Calendar, Tag, AlertCircle, Loader2, Share2 } from 'lucide-react';
+import { useSEO } from '../hooks/useSEO';
 import { getBeritaBySlug, urlFor } from '../services/cmsClient';
 
 // ==========================================
@@ -147,6 +148,13 @@ const NewsDetail = () => {
   const [news, setNews] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  // Set SEO metadata dynamically
+  useSEO({
+    title: news ? news.title : 'Memuat Berita...',
+    description: news ? (news.excerpt || `Baca berita terbaru "${news.title}" di website resmi SDN Rengas.`) : 'Baca berita terbaru seputar sekolah dan kegiatan belajar di SDN Rengas.',
+    keywords: news ? `Berita SDN Rengas, Berita Sekolah Rengas, SDN Rengas, ${news.category || 'Berita'}` : 'Berita SDN Rengas, Berita Sekolah Rengas, SDN Rengas'
+  });
 
   useEffect(() => {
     const fetchDetail = async () => {
